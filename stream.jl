@@ -18,6 +18,54 @@ const bytes = [
     3 * sizeof(Float64) * STREAM_ARRAY_SIZE
 ]
 
+function checkResults(a::Array{Float64,1}, b::Array{Float64,1}, c::Array{Float64,1})
+    aj::Float64 = 1.0
+    bj::Float64 = 2.0
+    cj::Float64 = 0.0
+
+    # part of timing
+    aj = 2.0 * aj
+
+    for k in 1:NTIMES
+        cj = aj
+        bj = scalar * cj
+        cj = aj + bj
+        aj = bj + scalar * cj
+    end
+
+    aSumErr = 0.0
+    bSumErr = 0.0
+    cSumErr = 0.0
+    for j in 1:STREAM_ARRAY_SIZE
+        aSumErr += abs(a[j] - aj)
+        bSumErr += abs(b[j] - bj)
+        cSumErr += abs(c[j] - cj)
+    end
+
+    aAvgErr = aSumErr / STREAM_ARRAY_SIZE
+    bAvgErr = bSumErr / STREAM_ARRAY_SIZE
+    cAvgErr = cSumErr / STREAM_ARRAY_SIZE
+
+    epsilon = 1.e-13
+
+    err = 0
+    if (abs(aAvgErr/aj) > epsilon)
+        err += 1
+        println("Validation of array a failed with rate: ", abs(aAvgErr/aj))
+    end
+    if (abs(bAvgErr/bj) > epsilon)
+        err += 1
+        println("Validation of array b failed with rate: ", abs(bAvgErr/bj))
+    end
+    if (abs(cAvgErr/cj) > epsilon)
+        err += 1
+        println("Validation of array c failed with rate: ", abs(cAvgErr/cj))
+    end
+    if (err == 0)
+        println("Everything validated with errors under: ", epsilon)
+    end
+end
+
 # 1. setup data + arrays
 # (2. give overview over expected time )
 # 3. do benchmark
@@ -83,7 +131,7 @@ function main()
         avgtime[j] = avgtime[j]/(NTIMES - 1)
         Printf.@printf "%s%12.1f  %11.6f  %11.6f  %11.6f\n" label[j] 1.0e-6 * bytes[j]/mintime[j] avgtime[j] mintime[j] maxtime[j]
     end
-    
+    checkResults(a, b, c)
 end
 
 
