@@ -78,9 +78,15 @@ end
 
 function main()
     # initialization
-    a = ones(Float64, STREAM_ARRAY_SIZE)
-    b = ones(Float64, STREAM_ARRAY_SIZE) + ones(Float64, STREAM_ARRAY_SIZE)
-    c = zeros(Float64, STREAM_ARRAY_SIZE)
+    a = Array{Float64, 1}(undef, STREAM_ARRAY_SIZE)
+    b = Array{Float64, 1}(undef, STREAM_ARRAY_SIZE)
+    c = Array{Float64, 1}(undef, STREAM_ARRAY_SIZE)
+
+    Threads.@threads for i in 1:STREAM_ARRAY_SIZE
+        a[i] = 1.0
+        b[i] = 2.0
+        c[i] = 0.0
+    end
 
     times = zeros(Float64, 4, NTIMES)
 
