@@ -1,12 +1,12 @@
 using Printf
 
 # parameters:
-# STREAM_ARRAY_SIZE = 10000000
+# STREAM_ARRAY_SIZE = 100000000
 # NTIMES            = 10
 # OFFSET            = 0
 # STREAM_TYPE       = double
 
-const STREAM_ARRAY_SIZE = 10000000
+const STREAM_ARRAY_SIZE = 100_000_000
 const NTIMES = 10
 # const OFFSET = 0
 const scalar = 3.0
@@ -17,6 +17,27 @@ const bytes = [
     3 * sizeof(Float64) * STREAM_ARRAY_SIZE,
     3 * sizeof(Float64) * STREAM_ARRAY_SIZE
 ]
+const sep = "----------------------------------------------"
+
+# only print 3 decimal places per default
+Base.show(io::IO, f::Float64) = @printf(io, "%.3f", f)
+
+function quantum()
+    M = 20
+    timesfound = Array{Float64, 1}(undef, M)
+    for i in 1:M
+	t1 = time_ns()
+        while ((t2 = time_ns()) - t1) / 1e9 < 1e-6
+	end
+	timesfound[i] = (t1 = t2)
+    end
+    minDelta = 1000000
+    for i in 2:M
+	delta = floor(1e6 * (timesfound[i] - timesfound[i-1]))
+	minDelta = min(minDelta, max(delta, 0))
+    end
+    return minDelta / 1e6
+end
 
 function checkResults(a::Array{Float64,1}, b::Array{Float64,1}, c::Array{Float64,1})
     aj::Float64 = 1.0
@@ -62,7 +83,7 @@ function checkResults(a::Array{Float64,1}, b::Array{Float64,1}, c::Array{Float64
         println("Validation of array c failed with rate: ", abs(cAvgErr/cj))
     end
     if (err == 0)
-        println("Everything validated with errors under: ", epsilon)
+        println("Everything validated successfully with an error rate under: ", epsilon)
     end
 end
 
@@ -82,6 +103,15 @@ function main()
     b = Array{Float64, 1}(undef, STREAM_ARRAY_SIZE)
     c = Array{Float64, 1}(undef, STREAM_ARRAY_SIZE)
 
+    arraySize = sizeof(Float64) * STREAM_ARRAY_SIZE / 1024 / 1024
+
+    println("STREAM.jl")
+    println(sep)
+    println("This run uses ", STREAM_ARRAY_SIZE, " values of size ", sizeof(Float64))
+    println("Memory per array = ", arraySize, " MiB (= ", arraySize / 1024, " GiB)")
+    println("Total memory = ", arraySize * 3, " MiB")
+    println(sep)
+
     Threads.@threads for i in 1:STREAM_ARRAY_SIZE
         a[i] = 1.0
         b[i] = 2.0
@@ -97,35 +127,67 @@ function main()
     println("Using ", Threads.nthreads(), " threads")
 
     # part of the timer code
+    tmp = time_ns()
     Threads.@threads for i in 1:STREAM_ARRAY_SIZE
         a[i] = 2.0 * a[i]
     end
+    tmp = (time_ns() - tmp) * 1e-3
+
+    println("Each test below will take on the order of ", tmp, " microseconds")
+    println("That equals ", tmp / quantum(), " clock ticks")
+    println(sep)
 
     for k in 1:NTIMES
-        tmp = @timed Threads.@threads for j in 1:STREAM_ARRAY_SIZE
+	times[1,k] = time_ns()
+        Threads.@threads for j in 1:STREAM_ARRAY_SIZE
             c[j] = a[j]
         end
-        times[1,k] = tmp[2]
+        times[1,k] = time_ns() - times[1,k]
 
-        tmp = @timed Threads.@threads for j in 1:STREAM_ARRAY_SIZE
+	times[2,k] = time_ns()
+        Threads.@threads for j in 1:STREAM_ARRAY_SIZE
             b[j] = scalar * c[j]
         end
-        times[2,k] = tmp[2]
+        times[2,k] = time_ns() - times[2,k]
 
-        tmp = @timed Threads.@threads for j in 1:STREAM_ARRAY_SIZE
+	times[3,k] = time_ns()        
+	Threads.@threads for j in 1:STREAM_ARRAY_SIZE
             c[j] = a[j] + b[j]
         end
-        times[3,k] = tmp[2]
+        times[3,k] = time_ns() - times[3,k]
 
-        tmp = @timed Threads.@threads for j in 1:STREAM_ARRAY_SIZE
+        times[4,k] = time_ns()
+	Threads.@threads for j in 1:STREAM_ARRAY_SIZE
             a[j] = b[j] + scalar * c[j]
         end
-        times[4,k] = tmp[2]
+        times[4,k] = time_ns() - times[4,k]
+        
+
+	#tmp = @timed Threads.@threads for j in 1:STREAM_ARRAY_SIZE
+        #    c[j] = a[j]
+        #end
+        #times[1,k] = tmp[2]
+
+        #tmp = @timed Threads.@threads for j in 1:STREAM_ARRAY_SIZE
+        #    b[j] = scalar * c[j]
+        #end
+        #times[2,k] = tmp[2]
+
+        #tmp = @timed Threads.@threads for j in 1:STREAM_ARRAY_SIZE
+        #    c[j] = a[j] + b[j]
+        #end
+        #times[3,k] = tmp[2]
+
+        #tmp = @timed Threads.@threads for j in 1:STREAM_ARRAY_SIZE
+        #    a[j] = b[j] + scalar * c[j]
+        #end
+        #times[4,k] = tmp[2]
     end
 
     # the first is only for warmup
     for k in 2:NTIMES
         for j in 1:4
+	    times[j,k] = times[j,k] * 1e-9
             avgtime[j] = avgtime[j] + times[j,k]
             mintime[j] = min(mintime[j], times[j,k])
             maxtime[j] = max(maxtime[j], times[j,k])
