@@ -186,7 +186,7 @@ function checkResults(a::Array{Float64,1}, b::Array{Float64,1}, c::Array{Float64
         aj = bj + scalar * cj
     end
 
-    Printf.@printf "aj = %lf, bj = %lf, cj = %lf" aj bj cj
+    Printf.@printf "aj = %lf, bj = %lf, cj = %lf\n" aj bj cj
 
     aSumErr = 0.0
     bSumErr = 0.0
@@ -217,7 +217,7 @@ function checkResults(a::Array{Float64,1}, b::Array{Float64,1}, c::Array{Float64
         println("Validation of array c failed with rate: ", abs(cAvgErr/cj))
     end
     if (err == 0)
-        println("Solution Validates: avg error less than ", epsilon, " on all three arrays)
+        Printf.@printf "Solution Validates: avg error less than %e on all three arrays\n" epsilon
     end
 end
 

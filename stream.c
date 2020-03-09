@@ -467,7 +467,7 @@ void checkSTREAMresults ()
             aj = bj+scalar*cj;
         }
 
-	printf("aj = %lf, bj = %lf, cj = %lf", aj, bj, cj);
+	printf("aj = %lf, bj = %lf, cj = %lf\n", aj, bj, cj);
 
     /* accumulate deltas between observed and expected results */
 	aSumErr = 0.0;
