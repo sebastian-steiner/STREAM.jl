@@ -375,6 +375,20 @@ main()
     checkSTREAMresults();
     printf(HLINE);
 
+    /* --- Print all times to disk */
+    FILE *f = fopen("c.results", "w");
+    if (f == NULL) {
+	fprintf(stderr, "Could not open file 'c.results'\n");
+	return 1;
+    }
+    for (k=1; k<NTIMES; k++) {
+	for (j=0; j<4; j++) {
+		fprintf(f, "%11.6f;", times[j][k]);
+	}
+	fprintf(f, "\n");
+    }
+    fclose(f);
+
     return 0;
 }
 
@@ -454,6 +468,8 @@ void checkSTREAMresults ()
             cj = aj+bj;
             aj = bj+scalar*cj;
         }
+
+	printf("aj = %lf, bj = %lf, cj = %lf", aj, bj, cj);
 
     /* accumulate deltas between observed and expected results */
 	aSumErr = 0.0;

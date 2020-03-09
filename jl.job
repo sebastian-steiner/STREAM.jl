@@ -1,0 +1,11 @@
+#! /bin/bash
+#SBATCH -p q_thesis
+#SBATCH -N 1
+#SBATCH --cpu-freq=High
+#SBATCH --time=5:00
+#SBATCH --output jl.out
+#SBATCH --error jl.err
+
+export JULIA_NUM_THREADS=32 
+
+srun julia stream.jl
