@@ -382,7 +382,7 @@ main()
 	return 1;
     }
 	fprintf(f, "Copy;Scale;Add;Triad\n");
-    for (k=0; k<NTIMES; k++) {
+    for (k=1; k<NTIMES; k++) {
 		fprintf(f, "%11.6f;%11.6f;%11.6f;%11.6f\n", times[0][k], times[1][k], times[2][k], times[3][k]);
     }
     fclose(f);
