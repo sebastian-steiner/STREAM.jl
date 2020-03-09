@@ -217,7 +217,7 @@ function checkResults(a::Array{Float64,1}, b::Array{Float64,1}, c::Array{Float64
         println("Validation of array c failed with rate: ", abs(cAvgErr/cj))
     end
     if (err == 0)
-        println("Everything validated successfully with an error rate under: ", epsilon)
+        println("Solution Validates: avg error less than ", epsilon, " on all three arrays)
     end
 end
 
