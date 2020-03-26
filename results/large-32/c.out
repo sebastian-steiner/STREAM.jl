@@ -1,0 +1,68 @@
+-------------------------------------------------------------
+STREAM version $Revision: 5.10 $
+-------------------------------------------------------------
+This system uses 8 bytes per array element.
+-------------------------------------------------------------
+Array size = 1000000000 (elements), Offset = 0 (elements)
+Memory per array = 7629.4 MiB (= 7.5 GiB).
+Total memory required = 22888.2 MiB (= 22.4 GiB).
+Each kernel will be executed 100 times.
+ The *best* time for each kernel (excluding the first iteration)
+ will be used to compute the reported bandwidth.
+-------------------------------------------------------------
+[1;34m[pthread wrapper] 
+[0m[1;34m[pthread wrapper] MAIN -> 0
+[0m[1;34m[pthread wrapper] PIN_MASK: [0m[1;34m0->2  [0m[1;34m1->4  [0m[1;34m2->6  [0m[1;34m3->8  [0m[1;34m4->10  [0m[1;34m5->12  [0m[1;34m6->14  [0m[1;34m7->16  [0m[1;34m8->18  [0m[1;34m9->20  [0m[1;34m10->22  [0m[1;34m11->24  [0m[1;34m12->26  [0m[1;34m13->28  [0m[1;34m14->30  [0m[1;34m15->1  [0m[1;34m16->3  [0m[1;34m17->5  [0m[1;34m18->7  [0m[1;34m19->9  [0m[1;34m20->11  [0m[1;34m21->13  [0m[1;34m22->15  [0m[1;34m23->17  [0m[1;34m24->19  [0m[1;34m25->21  [0m[1;34m26->23  [0m[1;34m27->25  [0m[1;34m28->27  [0m[1;34m29->29  [0m[1;34m30->31  [0m[1;34m
+[pthread wrapper] SKIP MASK: 0x0
+[0m[1;34m	threadid 140661539178240 -> core 2 - OK[0m[1;34m
+[0m[1;34m	threadid 140661530785536 -> core 4 - OK[0m[1;34m
+[0m[1;34m	threadid 140661522392832 -> core 6 - OK[0m[1;34m
+[0m[1;34m	threadid 140661514000128 -> core 8 - OK[0m[1;34m
+[0m[1;34m	threadid 140661505607424 -> core 10 - OK[0m[1;34m
+[0m[1;34m	threadid 140661497214720 -> core 12 - OK[0m[1;34m
+[0m[1;34m	threadid 140661488822016 -> core 14 - OK[0m[1;34m
+[0m[1;34m	threadid 140661480429312 -> core 16 - OK[0m[1;34m
+[0m[1;34m	threadid 140661472036608 -> core 18 - OK[0m[1;34m
+[0m[1;34m	threadid 140661463643904 -> core 20 - OK[0m[1;34m
+[0m[1;34m	threadid 140661455251200 -> core 22 - OK[0m[1;34m
+[0m[1;34m	threadid 140661446858496 -> core 24 - OK[0m[1;34m
+[0m[1;34m	threadid 140661438465792 -> core 26 - OK[0m[1;34m
+[0m[1;34m	threadid 140661430073088 -> core 28 - OK[0m[1;34m
+[0m[1;34m	threadid 140661421680384 -> core 30 - OK[0m[1;34m
+[0m[1;34m	threadid 140661413287680 -> core 1 - OK[0m[1;34m
+[0m[1;34m	threadid 140661404894976 -> core 3 - OK[0m[1;34m
+[0m[1;34m	threadid 140661396502272 -> core 5 - OK[0m[1;34m
+[0m[1;34m	threadid 140661388109568 -> core 7 - OK[0m[1;34m
+[0m[1;34m	threadid 140661379716864 -> core 9 - OK[0m[1;34m
+[0m[1;34m	threadid 140661371324160 -> core 11 - OK[0m[1;34m
+[0m[1;34m	threadid 140661362931456 -> core 13 - OK[0m[1;34m
+[0m[1;34m	threadid 140661354538752 -> core 15 - OK[0m[1;34m
+[0m[1;34m	threadid 140661346146048 -> core 17 - OK[0m[1;34m
+[0m[1;34m	threadid 140661337753344 -> core 19 - OK[0m[1;34m
+[0m[1;34m	threadid 140661329360640 -> core 21 - OK[0m[1;34m
+[0m[1;34m	threadid 140661320967936 -> core 23 - OK[0m[1;34m
+[0m[1;34m	threadid 140661312575232 -> core 25 - OK[0m[1;34m
+[0m[1;34m	threadid 140661304182528 -> core 27 - OK[0m[1;34m
+[0m[1;34m	threadid 140661295789824 -> core 29 - OK[0m[1;34m
+[0m[1;34m	threadid 140661287397120 -> core 31 - OK[0m[1;34m
+[0mNumber of Threads requested = 32
+Number of Threads counted = 32
+-------------------------------------------------------------
+Your clock granularity/precision appears to be 1 microseconds.
+Each test below will take on the order of 114988 microseconds.
+   (= 114988 clock ticks)
+Increase the size of the arrays if this shows that
+you are not getting at least 20 clock ticks per test.
+-------------------------------------------------------------
+WARNING -- The above is only a rough guideline.
+For best results, please be sure you know the
+precision of your system timer.
+-------------------------------------------------------------
+Function    Best Rate MB/s  Avg time     Min time     Max time
+Copy:          152198.1     0.105558     0.105126     0.107431
+Scale:         109194.1     0.148587     0.146528     0.151235
+Add:           124185.7     0.194130     0.193259     0.195779
+Triad:         124968.9     0.193689     0.192048     0.195812
+-------------------------------------------------------------
+aj = 8131223550704304958367105871878761624364116078561909158700639572545038921278316661384753877204194106215605780518797312.000000, bj = 1626244710140860935679802619930647060936766201501274878698990483642769411755935808182153995936815186721183824313581568.000000, cj = 2168326280187814580906403493240862747915688268668366504931987311523692549007914410909538661249086915628245099084775424.000000Solution Validates: avg error less than 1.000000e-13 on all three arrays
+-------------------------------------------------------------

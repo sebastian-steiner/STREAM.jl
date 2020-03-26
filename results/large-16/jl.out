@@ -1,0 +1,43 @@
+[1;34m[pthread wrapper] 
+[0m[1;34m[pthread wrapper] MAIN -> 0
+[0m[1;34m[pthread wrapper] PIN_MASK: [0m[1;34m0->2  [0m[1;34m1->4  [0m[1;34m2->6  [0m[1;34m3->8  [0m[1;34m4->10  [0m[1;34m5->12  [0m[1;34m6->14  [0m[1;34m7->16  [0m[1;34m8->18  [0m[1;34m9->20  [0m[1;34m10->22  [0m[1;34m11->24  [0m[1;34m12->26  [0m[1;34m13->28  [0m[1;34m14->30  [0m[1;34m
+[pthread wrapper] SKIP MASK: 0x0
+[0m[1;34m	threadid 140305097094912 -> core 2 - OK[0m[1;34m
+[0m[1;34m	threadid 140304864147200 -> core 4 - OK[0m[1;34m
+[0m[1;34m	threadid 140304846718720 -> core 6 - OK[0m[1;34m
+[0m[1;34m	threadid 140304762005248 -> core 8 - OK[0m[1;34m
+[0m[1;34m	threadid 140304744576768 -> core 10 - OK[0m[1;34m
+[0m[1;34m	threadid 140304727148288 -> core 12 - OK[0m[1;34m
+[0m[1;34m	threadid 140304434853632 -> core 14 - OK[0m[1;34m
+[0m[1;34m	threadid 140304418068224 -> core 16 - OK[0m[1;34m
+[0m[1;34m	threadid 140304401282816 -> core 18 - OK[0m[1;34m
+[0m[1;34m	threadid 140304384497408 -> core 20 - OK[0m[1;34m
+[0m[1;34m	threadid 140304158025472 -> core 22 - OK[0m[1;34m
+[0m[1;34m	threadid 140304141240064 -> core 24 - OK[0m[1;34m
+[0m[1;34m	threadid 140304124454656 -> core 26 - OK[0m[1;34m
+[0m[1;34m	threadid 140303830873856 -> core 28 - OK[0m[1;34m
+[0m[1;34m	threadid 140303814088448 -> core 30 - OK[0m[1;34m
+[0m[1;34mRoundrobin placement triggered
+	threadid 140303797303040 -> core 0 - OK[0m[1;34m
+[0mSTREAM.jl
+----------------------------------------------
+Array size = 1000000000 (elements) Offset = 0 (elements)
+Memory per array = 7629.395 MiB (= 7.451 GiB)
+Total memory = 22888.184 MiB
+Each kernel will be executed 100 times
+ The *best* time for each kernel (excluding the first run)
+ will be used to compute the reported bandwidth.
+----------------------------------------------
+Using 16 threads
+Your clock granularity/precision appears to be 1048.000ns
+Each test below will take on the order of 223070.469 microseconds
+    (= 212.000 clock ticks)
+Increase the size of the arrays if this shows that
+ you are not getting at least 20,000 clock ticks per test.
+----------------------------------------------
+Function   Best Rate MB/s  Avg time    Min time    Max time
+Copy:	     58576.0     0.274509     0.273150     0.276242
+Scale:	     58841.0     0.273688     0.271919     0.275726
+Add:	     66207.3     0.369744     0.362498     0.379268
+Triad:	     66401.0     0.363219     0.361440     0.365732
+aj = 8131223550704304958367105871878761624364116078561909158700639572545038921278316661384753877204194106215605780518797312.000000, bj = 1626244710140860935679802619930647060936766201501274878698990483642769411755935808182153995936815186721183824313581568.000000, cj = 2168326280187814580906403493240862747915688268668366504931987311523692549007914410909538661249086915628245099084775424.000000Everything validated successfully with an error rate under: 0.000
