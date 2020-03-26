@@ -1,0 +1,45 @@
+---
+title: "R Notebook"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r}
+require(ggplot2)
+c16 <- read.csv("results/large-16/c.results", sep=";")
+jl16 <- read.csv("results/large-16/jl.results", sep=";")
+c32 <- read.csv("results/large-32/c.results", sep=";")
+jl32 <- read.csv("results/large-32/jl.results", sep=";")
+```
+
+# Large with 32 Threads on 2 Sockets
+
+```{r}
+boxplot(x=as.list(c(c32['CTriad'], jl32['JTriad'])))
+boxplot(x=as.list(c(c32['CCopy'], jl32['JCopy'])))
+boxplot(x=as.list(c(c32['CAdd'], jl32['JAdd'])))
+boxplot(x=as.list(c(c32['CScale'], jl32['JScale'])))
+```
+
+```{r}
+x32 <- data.frame(c(rep("Julia", 99), rep("C", 99)), c(jl32$JTriad, c32$CTriad))
+colnames(x32) <- c("impl", "val")
+ggplot(x32, aes(x=impl, y=val)) + geom_violin() + geom_boxplot(width=0.1)
+```
+
+# Large with 16 Threads on 1 Socket
+
+```{r}
+boxplot(x=as.list(c(c16['CTriad'], jl16['JTriad'])))
+boxplot(x=as.list(c(c16['CCopy'], jl16['JCopy'])))
+boxplot(x=as.list(c(c16['CAdd'], jl16['JAdd'])))
+boxplot(x=as.list(c(c16['CScale'], jl16['JScale'])))
+```
+
+```{r}
+x16 <- data.frame(c(rep("Julia", 99), rep("C", 99)), c(jl16$JTriad, c16$CTriad))
+colnames(x16) <- c("impl", "val")
+ggplot(x16, aes(x=impl, y=val)) + geom_violin() + geom_boxplot(width=0.1)
+```
