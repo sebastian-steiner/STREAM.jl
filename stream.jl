@@ -145,7 +145,7 @@ function main()
 	open("jl.results", "w") do f
         	# print all times to disk
 	        Printf.@printf f "Copy;Scale;Add;Triad\n"
-		for k in 1:NTIMES
+		for k in 2:NTIMES
 			Printf.@printf f "%11.6f;%11.6f;%11.6f;%11.6f\n" times[1,k] times[2,k] times[3,k] times[4,k]
 		end
 	end
@@ -186,7 +186,7 @@ function checkResults(a::Array{Float64,1}, b::Array{Float64,1}, c::Array{Float64
         aj = bj + scalar * cj
     end
 
-    Printf.@printf "aj = %lf, bj = %lf, cj = %lf" aj bj cj
+    Printf.@printf "aj = %lf, bj = %lf, cj = %lf\n" aj bj cj
 
     aSumErr = 0.0
     bSumErr = 0.0
@@ -217,7 +217,7 @@ function checkResults(a::Array{Float64,1}, b::Array{Float64,1}, c::Array{Float64
         println("Validation of array c failed with rate: ", abs(cAvgErr/cj))
     end
     if (err == 0)
-        println("Everything validated successfully with an error rate under: ", epsilon)
+        Printf.@printf "Solution Validates: avg error less than %e on all three arrays\n" epsilon
     end
 end
 
