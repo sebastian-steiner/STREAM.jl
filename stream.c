@@ -381,7 +381,7 @@ main()
 	fprintf(stderr, "Could not open file 'c.results'\n");
 	return 1;
     }
-	fprintf(f, "Copy;Scale;Add;Triad\n");
+	fprintf(f, "CCopy;CScale;CAdd;CTriad\n");
     for (k=1; k<NTIMES; k++) {
 		fprintf(f, "%11.6f;%11.6f;%11.6f;%11.6f\n", times[0][k], times[1][k], times[2][k], times[3][k]);
     }

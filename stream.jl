@@ -144,7 +144,7 @@ function main()
 
 	open("jl.results", "w") do f
         	# print all times to disk
-	        Printf.@printf f "Copy;Scale;Add;Triad\n"
+	        Printf.@printf f "JCopy;JScale;JAdd;JTriad\n"
 		for k in 2:NTIMES
 			Printf.@printf f "%11.6f;%11.6f;%11.6f;%11.6f\n" times[1,k] times[2,k] times[3,k] times[4,k]
 		end
