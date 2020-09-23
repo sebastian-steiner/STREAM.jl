@@ -80,31 +80,27 @@ function main()
     for k in 1:NTIMES
 	    times[1,k] = time_ns()
         Threads.@threads for j in 1:STREAM_ARRAY_SIZE
-            c[j] = a[j]
+            @inbounds c[j] = a[j]
         end
         times[1,k] = time_ns() - times[1,k]
 
 	    times[2,k] = time_ns()
         Threads.@threads for j in 1:STREAM_ARRAY_SIZE
-            b[j] = scalar * c[j]
+            @inbounds b[j] = scalar * c[j]
         end
         times[2,k] = time_ns() - times[2,k]
 
 	    times[3,k] = time_ns()        
 	    Threads.@threads for j in 1:STREAM_ARRAY_SIZE
-            c[j] = a[j] + b[j]
+            @inbounds c[j] = a[j] + b[j]
         end
         times[3,k] = time_ns() - times[3,k]
 
         times[4,k] = time_ns()
 	    Threads.@threads for j in 1:STREAM_ARRAY_SIZE
-            a[j] = b[j] + scalar * c[j]
+            @inbounds a[j] = b[j] + scalar * c[j]
         end
         times[4,k] = time_ns() - times[4,k]
-	    #tmp = @timed Threads.@threads for j in 1:STREAM_ARRAY_SIZE
-        #    c[j] = a[j]
-        #end
-        #times[1,k] = tmp[2]
     end
 
     # Summarize the times
@@ -117,21 +113,6 @@ function main()
             avgtime[j] = avgtime[j] + times[j,k]
             mintime[j] = min(mintime[j], times[j,k])
             maxtime[j] = max(maxtime[j], times[j,k])
-
-            #tmp = @timed Threads.@threads for j in 1:STREAM_ARRAY_SIZE
-            #    b[j] = scalar * c[j]
-            #end
-            #times[2,k] = tmp[2]
-    
-            #tmp = @timed Threads.@threads for j in 1:STREAM_ARRAY_SIZE
-            #    c[j] = a[j] + b[j]
-            #end
-            #times[3,k] = tmp[2]
-    
-            #tmp = @timed Threads.@threads for j in 1:STREAM_ARRAY_SIZE
-            #    a[j] = b[j] + scalar * c[j]
-            #end
-            #times[4,k] = tmp[2]
         end
     end
 
@@ -186,7 +167,7 @@ function checkResults(a::Array{Float64,1}, b::Array{Float64,1}, c::Array{Float64
         aj = bj + scalar * cj
     end
 
-    Printf.@printf "aj = %lf, bj = %lf, cj = %lf\n" aj bj cj
+    #Printf.@printf "aj = %lf, bj = %lf, cj = %lf\n" aj bj cj
 
     aSumErr = 0.0
     bSumErr = 0.0
